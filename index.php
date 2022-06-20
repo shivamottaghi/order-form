@@ -23,7 +23,13 @@ function whatIsHappening() {
 
 // TODO: provide some products (you may overwrite the example)
 $products = [
-    ['name' => 'Your favourite drink', 'price' => 2.5],
+    ['name' => 'Simple Cookie', 'price' => 1.00],
+    ['name' => 'Chocolate Chip Cookie', 'price' => 1.50],
+    ['name' => 'Oatmeal Raisin Cookie', 'price' => 1.00],
+    ['name' => 'Gingersnaps', 'price' => 1.25],
+    ['name' => 'php Cookie', 'price' => 0.75],
+
+
 ];
 
 $totalValue = 0;
@@ -52,5 +58,5 @@ $formSubmitted = false;
 if ($formSubmitted) {
     handleForm();
 }
-
+//whatIsHappening();
 require 'form-view.php';
