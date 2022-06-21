@@ -37,20 +37,24 @@ function validate()
     // TODO: This function will send a list of invalid fields back
     $warnArr = [];
     $message = ' field is required';
-    if (strlen($_POST['email'])<2){
+    if (strlen($_POST['email'])===0){
         array_push($warnArr, 'email'.$message);
+    }elseif(!filter_var($_POST['email'],FILTER_VALIDATE_EMAIL)){
+        array_push($warnArr,"Invalid Email Address.");
     }
-    if (strlen($_POST['street'])==0){
+    if (strlen($_POST['street'])===0){
         array_push($warnArr, 'street'.$message);
     }
     if (strlen($_POST['streetnumber'])==0){
         array_push($warnArr, 'street number'.$message);
     }
-    if (strlen($_POST['city'])<2){
+    if (strlen($_POST['city'])===2){
         array_push($warnArr, 'city'.$message);
     }
-    if (strlen($_POST['zipcode'])<2){
+    if (strlen($_POST['zipcode'])===0){
         array_push($warnArr, 'zipcode'.$message);
+    }elseif(!filter_var($_POST['zipcode'], FILTER_VALIDATE_INT)){
+        array_push($warnArr, 'Invalid ZIP code');
     }
     if (empty($_POST['products'])){
         array_push($warnArr, 'You need to choose one of our products!');
@@ -64,9 +68,13 @@ function handleForm($products)
 
     // Validation (step 2)
     $invalidFields = validate();
-    $alert = implode('<br>', $invalidFields);
+    //$alert = implode('<br>', $invalidFields);
     if (!empty($invalidFields)) {
-        echo $alert;
+        foreach ($invalidFields as $warning){
+            echo '<div class="alert alert-danger" role="alert">';
+            echo $warning;
+            echo '</div>';
+        }
     } else {
         // TODO: handle successful submission
         echo "<h2>Your order was successfully submitted!</h2>";
