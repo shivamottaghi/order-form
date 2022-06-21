@@ -78,6 +78,8 @@ function handleForm($products , $totalValue)
         echo generateAddress() ."<br>";
         echo "Products: <br>";
         echo generateProductList($products);
+        echo "Total Amount: &euro;";
+        echo calculatePrice($totalValue, $products);
         //echo "";
     }
 }
@@ -92,6 +94,13 @@ function generateProductList($products){
         $i++;
     }
     return $productList;
+}
+function calculatePrice($total, $products){
+
+    foreach ($_POST['products'] as $index => $product){
+        $total+= $products[$index]['price'];
+    }
+    return $total;
 }
 // TODO: replace this if by an actual check
 $formSubmitted = false;
