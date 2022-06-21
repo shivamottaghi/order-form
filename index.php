@@ -58,7 +58,7 @@ function validate()
     return $warnArr;
 }
 
-function handleForm()
+function handleForm($products , $totalValue)
 {
     // TODO: form related tasks (step 1)
 
@@ -72,17 +72,33 @@ function handleForm()
         echo '</script>';*/
     } else {
         // TODO: handle successful submission
-        echo "<h1>Your order was successfully submitted!</h1>";
-
+        echo "<h2>Your order was successfully submitted!</h2>";
+        echo "<h3>Here is your order detail: </h3>";
+        echo "Address: ";
+        echo generateAddress() ."<br>";
+        echo "Products: <br>";
+        echo generateProductList($products);
+        //echo "";
     }
 }
-
+function generateAddress (){
+    return $_POST['street']." ".$_POST['streetnumber'].", ".$_POST['city'].", ".$_POST['zipcode'];
+}
+function generateProductList($products){
+    $productList = "";
+    $i = 1;
+    foreach ($_POST['products'] as $index => $product){
+        $productList .= $i .". " .$products[$index]['name'] ."<br>";
+        $i++;
+    }
+    return $productList;
+}
 // TODO: replace this if by an actual check
 $formSubmitted = false;
 
 
 require 'form-view.php';
 if (isset($_POST['submit'])) {
-    handleForm();
+    handleForm($products , $totalValue);
 }
 //whatIsHappening();
