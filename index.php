@@ -28,8 +28,6 @@ $products = [
     ['name' => 'Oatmeal Raisin Cookie', 'price' => 1.00],
     ['name' => 'Gingersnaps', 'price' => 1.25],
     ['name' => 'php Cookie', 'price' => 0.75],
-
-
 ];
 
 $totalValue = 0;
@@ -37,7 +35,27 @@ $totalValue = 0;
 function validate()
 {
     // TODO: This function will send a list of invalid fields back
-    return [];
+    $warnArr = [];
+    $message = ' field is required';
+    if (strlen($_POST['email'])<2){
+        array_push($warnArr, 'email'.$message);
+    }
+    if (strlen($_POST['street'])==0){
+        array_push($warnArr, 'street'.$message);
+    }
+    if (strlen($_POST['streetnumber'])==0){
+        array_push($warnArr, 'street number'.$message);
+    }
+    if (strlen($_POST['city'])<2){
+        array_push($warnArr, 'city'.$message);
+    }
+    if (strlen($_POST['zipcode'])<2){
+        array_push($warnArr, 'zipcode'.$message);
+    }
+    if (empty($_POST['products'])){
+        array_push($warnArr, 'You need to choose one of our products!');
+    }
+    return $warnArr;
 }
 
 function handleForm()
@@ -46,17 +64,25 @@ function handleForm()
 
     // Validation (step 2)
     $invalidFields = validate();
+    $alert = implode('<br>', $invalidFields);
     if (!empty($invalidFields)) {
-        // TODO: handle errors
+        echo $alert;
+        /*echo '<script type="text/javascript">';
+        echo "window.alert('$alert')";
+        echo '</script>';*/
     } else {
         // TODO: handle successful submission
+        echo "<h1>Your order was successfully submitted!</h1>";
+
     }
 }
 
 // TODO: replace this if by an actual check
 $formSubmitted = false;
-if ($formSubmitted) {
+
+
+require 'form-view.php';
+if (isset($_POST['submit'])) {
     handleForm();
 }
 //whatIsHappening();
-require 'form-view.php';
