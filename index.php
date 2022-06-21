@@ -58,7 +58,7 @@ function validate()
     return $warnArr;
 }
 
-function handleForm($products , $totalValue)
+function handleForm($products)
 {
     // TODO: form related tasks (step 1)
 
@@ -67,9 +67,6 @@ function handleForm($products , $totalValue)
     $alert = implode('<br>', $invalidFields);
     if (!empty($invalidFields)) {
         echo $alert;
-        /*echo '<script type="text/javascript">';
-        echo "window.alert('$alert')";
-        echo '</script>';*/
     } else {
         // TODO: handle successful submission
         echo "<h2>Your order was successfully submitted!</h2>";
@@ -79,7 +76,7 @@ function handleForm($products , $totalValue)
         echo "Products: <br>";
         echo generateProductList($products);
         echo "Total Amount: &euro;";
-        echo calculatePrice($totalValue, $products);
+        echo calculatePrice($products);
         //echo "";
     }
 }
@@ -90,13 +87,13 @@ function generateProductList($products){
     $productList = "";
     $i = 1;
     foreach ($_POST['products'] as $index => $product){
-        $productList .= $i .". " .$products[$index]['name'] ."<br>";
+        $productList .= $i .". " .$products[$index]['name'].'&emsp;&euro;'.$products[$index]['price'] ."<br>";
         $i++;
     }
     return $productList;
 }
-function calculatePrice($total, $products){
-
+function calculatePrice($products){
+    $total = 0;
     foreach ($_POST['products'] as $index => $product){
         $total+= $products[$index]['price'];
     }
@@ -106,8 +103,9 @@ function calculatePrice($total, $products){
 $formSubmitted = false;
 
 
-require 'form-view.php';
+
 if (isset($_POST['submit'])) {
-    handleForm($products , $totalValue);
+    handleForm($products);
 }
+require 'form-view.php';
 //whatIsHappening();
