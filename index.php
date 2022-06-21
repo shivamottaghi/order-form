@@ -77,14 +77,25 @@ function handleForm($products)
         }
     } else {
         // TODO: handle successful submission
-        echo "<h2>Your order was successfully submitted!</h2>";
+        echo "<div class='container'><div class='row'><div class='col-12 col-md-4 offset-md-4 p-3' style='border: 2px solid #326476'>";
+        ///echo "<h2>Your order was successfully submitted!</h2>";
+        /// ************** HERE STARTS THE ORDER DETAIL *****************
+        echo "<p>";
         echo "<h3>Here is your order detail: </h3>";
+        echo "Your Email: " .$_POST['email'] . "<br>";
         echo "Address: ";
         echo generateAddress() ."<br>";
         echo "Products: <br>";
         echo generateProductList($products);
         echo "Total Amount: &euro;";
-        echo calculatePrice($products);
+        echo calculatePrice($products)."<br>";
+        echo "</p>";
+        ///***************** HERE ENDS THE ORDER DETAIL ******************
+        echo "<p>If the information above is correct press confirm otherwise press cancel</p>";
+        echo "<button type='reset' name='confirm' class='btn btn-outline-success btn-sm m-1'>Confirm</button>";
+        echo "<button type='button' name='reset' class='btn btn-outline-warning btn-sm m-1'>Cancel</button>";
+        //********* to close container and row and col *****
+        echo "</div> </div> </div>";
         //echo "";
     }
 }
