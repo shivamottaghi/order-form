@@ -94,8 +94,7 @@ function handleForm($products)
         echo "</p>";
         ///***************** HERE ENDS THE ORDER DETAIL ******************
         echo "<p>If the information above is correct press confirm otherwise press cancel</p>";
-        echo "<button type='confirm' name='confirm' class='btn btn-outline-success btn-sm m-1' form='orderForm'>Confirm</button>";
-        echo "<button type='reset' name='reset' class='btn btn-outline-warning btn-sm m-1' form='orderForm'>Cancel</button>";
+        echo generateButtons();
         //********* to close container and row and col *****
         echo "</div> </div> </div>";
         //echo "";
@@ -113,6 +112,12 @@ function generateProductList($products){
     }
     return $productList;
 }
+function generateButtons(){
+    echo "<form method='post' action='index.php'>";
+    echo "<button type='confirm' name='confirm' class='btn btn-outline-success btn-sm m-1'>Confirm</button>";
+    echo "<button type='cancel' name='cancel' class='btn btn-outline-warning btn-sm m-1'>Cancel</button>";
+    echo "</form>";
+}
 function calculatePrice($products){
     $total = 0;
     foreach ($_POST['products'] as $index => $product){
@@ -126,16 +131,26 @@ function confirmation(){
     //********* to close container and row and col *****
     echo "</div> </div> </div>";
 }
+function cancelation(){
+    echo "<div class='container'><div class='row'><div class='col-12 col-md-4 offset-md-4 p-3' style='border: 2px solid #326476'>";
+    echo "<h2>Your order was canceled.</h2>";
+    //********* to close container and row and col *****
+    echo "</div> </div> </div>";
+}
 function assignSessionVar(){
     $_SESSION['email'] = $_POST['email'];
     $_SESSION['street'] = $_POST['street'];
     $_SESSION['streetnumber'] = $_POST['streetnumber'];
     $_SESSION['city'] = $_POST['city'];
     $_SESSION['zipcode'] = $_POST['zipcode'];
-}
-function endSession(){
+    if (isset($_POST['products'])){
+        foreach ($_POST['products'] as $i => $product){
+            $_SESSION['products'][$i] = $product;
+        }
+    }
 
 }
+
 // TODO: replace this if by an actual check
 //$formSubmitted = false;
 
@@ -149,11 +164,16 @@ if (isset($_POST['submit'])) {
 if (isset($_POST['newOrder'])){
     session_unset();
 }
-require 'form-view.php';
-/*if (isset($_POST['confirm'])){
-    echo "test";
+if (isset($_POST['confirm'])){
     confirmation();
-}*/
+    session_unset();
+}
+if (isset($_POST['cancel'])){
+    cancelation();
+    session_unset();
+}
+require 'form-view.php';
+
 
 
 whatIsHappening();
