@@ -30,7 +30,7 @@ $products = [
     ['name' => 'php Cookie', 'price' => 0.75],
 ];
 
-$totalValue = 0;
+$totalValue = calculatePrice($products);
 
 function validate()
 {
@@ -92,8 +92,8 @@ function handleForm($products)
         echo "</p>";
         ///***************** HERE ENDS THE ORDER DETAIL ******************
         echo "<p>If the information above is correct press confirm otherwise press cancel</p>";
-        echo "<button type='reset' name='confirm' class='btn btn-outline-success btn-sm m-1'>Confirm</button>";
-        echo "<button type='button' name='reset' class='btn btn-outline-warning btn-sm m-1'>Cancel</button>";
+        echo "<button type='confirm' name='confirm' class='btn btn-outline-success btn-sm m-1' form='orderForm'>Confirm</button>";
+        echo "<button type='reset' name='reset' class='btn btn-outline-warning btn-sm m-1' form='orderForm'>Cancel</button>";
         //********* to close container and row and col *****
         echo "</div> </div> </div>";
         //echo "";
@@ -118,6 +118,12 @@ function calculatePrice($products){
     }
     return $total;
 }
+function confirmation(){
+    echo "<div class='container'><div class='row'><div class='col-12 col-md-4 offset-md-4 p-3' style='border: 2px solid #326476'>";
+    echo "<h2>Your order was successfully submitted!</h2>";
+    //********* to close container and row and col *****
+    echo "</div> </div> </div>";
+}
 // TODO: replace this if by an actual check
 $formSubmitted = false;
 
@@ -126,5 +132,10 @@ $formSubmitted = false;
 if (isset($_POST['submit'])) {
     handleForm($products);
 }
+if (isset($_POST['confirm'])){
+    echo "test";
+    confirmation();
+}
+
 require 'form-view.php';
-//whatIsHappening();
+whatIsHappening();

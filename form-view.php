@@ -30,7 +30,7 @@
         </ul>
     </nav>
     */ ?>
-    <form method="post" action="index.php" id="orderForm">
+    <form method="post" action="index.php" name="orderForm">
         <div class="form-row">
             <div class="form-group col-md-6">
                 <label for="email">E-mail:</label>
