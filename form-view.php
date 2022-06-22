@@ -14,7 +14,9 @@
 <body>
 <div class="container">
     <div class=" float-end">
-        <a class="btn btn-primary" type="button" id="newOrder" href="<?php $_SERVER['PHP_SELF']; ?>">New Order</a>
+        <form method="post">
+            <button class="btn btn-primary" type="newOrder" id="newOrder" name="newOrder">New Order</button>
+        </form>
     </div>
     <h1>Place your cookie order</h1>
     <?php // Navigation for when you need it ?>
@@ -34,7 +36,12 @@
         <div class="form-row">
             <div class="form-group col-md-6">
                 <label for="email">E-mail:</label>
-                <input id="email" name="email" class="form-control"/>
+                <input id="email" name="email" class="form-control" <?php
+                if(isset( $_SESSION['email'])){
+                    $emailVal = $_SESSION['email'];
+                   echo "value = '$emailVal'";
+                }
+                ?>/>
             </div>
             <div></div>
         </div>
@@ -45,21 +52,41 @@
             <div class="form-row">
                 <div class="form-group col-md-6">
                     <label for="street">Street:</label>
-                    <input type="text" name="street" id="street" class="form-control">
+                    <input type="text" name="street" id="street" class="form-control" <?php
+                    if(isset($_SESSION['street'])) {
+                        $streetVal = $_SESSION['street'];
+                        echo "value='$streetVal'";
+                    }
+                    ?>>
                 </div>
                 <div class="form-group col-md-6">
                     <label for="streetnumber">Street number:</label>
-                    <input type="text" id="streetnumber" name="streetnumber" class="form-control">
+                    <input type="text" id="streetnumber" name="streetnumber" class="form-control" <?php
+                    if (isset($_SESSION['streetnumber'])){
+                        $stNum = $_SESSION['streetnumber'];
+                        echo "value='$stNum'";
+                    }
+                    ?>>
                 </div>
             </div>
             <div class="form-row">
                 <div class="form-group col-md-6">
                     <label for="city">City:</label>
-                    <input type="text" id="city" name="city" class="form-control">
+                    <input type="text" id="city" name="city" class="form-control" <?php
+                    if (isset($_SESSION['city'])) {
+                        $cityVal = $_SESSION['city'];
+                        echo "value = '$cityVal'";
+                    }
+                    ?>>
                 </div>
                 <div class="form-group col-md-6">
                     <label for="zipcode">Zipcode</label>
-                    <input type="text" id="zipcode" name="zipcode" class="form-control">
+                    <input type="text" id="zipcode" name="zipcode" class="form-control"<?php
+                    if (isset($_SESSION['zipcode'])){
+                        $zipVal = $_SESSION['zipcode'];
+                        echo "value = '$zipVal'";
+                    }
+                    ?>>
                 </div>
             </div>
         </fieldset>

@@ -30,7 +30,9 @@ $products = [
     ['name' => 'php Cookie', 'price' => 0.75],
 ];
 
-$totalValue = calculatePrice($products);
+
+    $totalValue = 0;
+
 
 function validate()
 {
@@ -45,7 +47,7 @@ function validate()
     if (strlen($_POST['street'])===0){
         array_push($warnArr, 'street'.$message);
     }
-    if (strlen($_POST['streetnumber'])==0){
+    if (strlen($_POST['streetnumber'])===0){
         array_push($warnArr, 'street number'.$message);
     }
     if (strlen($_POST['city'])===2){
@@ -124,18 +126,34 @@ function confirmation(){
     //********* to close container and row and col *****
     echo "</div> </div> </div>";
 }
+function assignSessionVar(){
+    $_SESSION['email'] = $_POST['email'];
+    $_SESSION['street'] = $_POST['street'];
+    $_SESSION['streetnumber'] = $_POST['streetnumber'];
+    $_SESSION['city'] = $_POST['city'];
+    $_SESSION['zipcode'] = $_POST['zipcode'];
+}
+function endSession(){
+
+}
 // TODO: replace this if by an actual check
-$formSubmitted = false;
+//$formSubmitted = false;
 
 
 
 if (isset($_POST['submit'])) {
     handleForm($products);
+    assignSessionVar();
+    //$totalValue = calculatePrice($products);
 }
-if (isset($_POST['confirm'])){
+if (isset($_POST['newOrder'])){
+    session_unset();
+}
+require 'form-view.php';
+/*if (isset($_POST['confirm'])){
     echo "test";
     confirmation();
-}
+}*/
 
-require 'form-view.php';
+
 whatIsHappening();
